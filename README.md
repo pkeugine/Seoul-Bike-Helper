@@ -13,29 +13,25 @@
 ### 주소 기반 실시간 대여소 정보 제공
 **도로명 주소도 가능합니다.**</br>
 <p align="center">
-  <img src="./images/search.jpg" />
+  <img src="./images/search.jpg" width="40%" />
   <img src="./images/search.gif" />
 </p>
 
 ### 즐겨찾기 대여소 실시간 정보 제공
 <p align="center">
-  <img src="./images/favorites.jpg" />
+  <img src="./images/favorites.jpg" width="40%" />
   <img src="./images/favorites.gif" />
 </p>
 
-### 선택한 따릉이 대여소 위치 제공
+### 선택한 따릉이 대여소 위치, 경로 제공
 <p align="center">
   <img src="./images/showLocation.gif" />
-</p>
-
-### 현위치로부터 대여소까지 경로 제공
-<p align="center">
   <img src="./images/showMap.gif" />
 </p>
 
 ###  일간, 주간, 월간 사용자 정보 제공
 <p align="center">
-  <img src="./images/userInfo.jpg" />
+  <img src="./images/userInfo.jpg" width="40%" />
   <img src="./images/userInfo.gif" />
 </p>
 
@@ -46,9 +42,40 @@
 
 ### 주간/월간 따릉이 이용 랭킹 및 등락 폭 표시
 <p align="center">
-  <img src="./images/ranking.jpg" />
+  <img src="./images/ranking.jpg" width="40%" />
   <img src="./images/ranking.gif" />
 </p>
+
+## 실행 방법
+```
+# 필요한 패키지 설치
+pip install -r requirements.txt
+
+# 서버 실행
+python3 main.py
+
+# cron 활성화
+flask crontab add
+
+# cron 제거
+crontab -r
+```
+* 크롤링을 위해 [ChromeDriver](https://chromedriver.chromium.org/downloads)가 설치되어 있어야합니다.
+* 만약 Chrome 브라우저를 사용하지 않는다면 [Chrome](https://www.google.com/chrome/)도 설치해야 합니다.
+* [python3](https://www.python.org/downloads/)가 필요합니다. 저는 3.8.9 버전을 사용했습니다.
+
+## 챗봇 연동 방법
+만약 서버를 챗봇과 연결하고 싶다면 카카오톡 채널과 챗봇이 필요합니다.</br>
+따릉봇은 무료로 운영할 수 있는 기능만을 활용했습니다.</br>
+유저의 실시간 위치를 얻고 싶다면 카카오 비즈니스 역시 활용해야 하는데, 이는 사업자 등록이 우선시 되어야 합니다 🥲 </br>
+
+사용자 발화를 받으려면 이를 챗봇(카카오i 빌더)에서 구분해야 하는데, 다양한 형태로 들어올 수 있는 주소를 처리하는 것이 포인트입니다. </br>
+다음과 같이 주소를 세 가지 방식으로 나누어 받을 수 있도록 하면 대여소 검색 기능을 굉장히 편리하게 사용할 수 있습니다:
+![Screen Shot 2022-07-12 at 4 13 52 AM](https://user-images.githubusercontent.com/48251668/178341920-c6fb7f1d-2e74-47d7-983d-ec9c03da2131.png)
+
+웬만하면 모든 형태의 주소를 모두 처리할 수 있게 됩니다:</br>
+![Screen Shot 2022-07-12 at 4 23 51 AM](https://user-images.githubusercontent.com/48251668/178342509-0128fbd4-1a80-4b79-a79a-c2be3d9d3fbf.png)
+
 
 ## repository 정보
 ### main.py
@@ -80,5 +107,18 @@ cron 을 활성화하면 정보가 각각의 주기에 맞게 최신화됩니다
 서버를 실행하기 위해 필요한 패키지 정보입니다.</br>
 venv 환경을 만들 때 이 파일로 필요한 모든 패키지를 다운 받을 수 있습니다.
 
-# 기타 등등
-kakaomap api 관련 아이디어 및 도움을 준 안승수(@ssahn0806)님 감사합니다 🙏
+## 추가 설명
+### 실시간 대여소 정보를 cron 으로 최신화 하는 이유
+openapi 를 통해 대여소 정보를 가지고 오는 경우 다음과 같은 불편함이 있습니다:
+* open api 에 특정 대여소 정보만 요청할 수 없음
+* open api 에 대여소 수를 보내면 그 수만큼의 정보가 나오는데, 정렬되어 있지도 않음
+* 굳이 대여소 정보 api 가 두 개임
+* 그래서 사용자의 요청이 올 때마다 최신 정보를 제공하려면 open api 에 모든 대여소에 대한 정보를 요청하고 그것을 가공해야함
+* 한 번에 1000 개의 대여소 정보만 요청 가능 (대여소는 총 3000개가 넘음)
+* 카카오 챗봇은 서버로부터의 응답이 3~4초가 넘어가는 경우 답변을 포기함
+
+이런 하드코어한... 환경이다보니 대여소의 정보는 사용자 요청과는 별개로 최신화하는 방법을 택했습니다. </br>
+따릉이 대여소 특성상 5분 사이에 극단적으로 대여 가능 자전거 수가 바뀌지 않으므로 충분히 신뢰할 수 있는 정보라 판단했습니다.
+
+### thanks to
+kakaomap api 관련 아이디어 및 도움을 준 안승수([@ssahn0806](https://github.com/ssahn0806))님 감사합니다 🙏
