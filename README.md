@@ -13,11 +13,13 @@
 ### 주소 기반 실시간 대여소 정보 제공
 **도로명 주소도 가능합니다.**</br>
 <p align="center">
-  <img src="./images/main.gif" />
+  <img src="./images/search.jpg" />
+  <img src="./images/search.gif" />
 </p>
 
 ### 즐겨찾기 대여소 실시간 정보 제공
 <p align="center">
+  <img src="./images/favorites.jpg" />
   <img src="./images/favorites.gif" />
 </p>
 
@@ -33,6 +35,7 @@
 
 ###  일간, 주간, 월간 사용자 정보 제공
 <p align="center">
+  <img src="./images/userInfo.jpg" />
   <img src="./images/userInfo.gif" />
 </p>
 
@@ -43,6 +46,7 @@
 
 ### 주간/월간 따릉이 이용 랭킹 및 등락 폭 표시
 <p align="center">
+  <img src="./images/ranking.jpg" />
   <img src="./images/ranking.gif" />
 </p>
 
